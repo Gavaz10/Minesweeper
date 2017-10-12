@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include "Point2D.h"
 #include "SFML\Graphics.hpp"
 #include "MainWindow.h"
-
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

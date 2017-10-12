@@ -8,6 +8,8 @@ int main()
 {
 	MainWindow window;
 
+	std::pair<int, int> pair;
+
 	while (window.getRenderWindow().isOpen())
 	{
 		sf::Event event;
