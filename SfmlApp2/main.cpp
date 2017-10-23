@@ -6,22 +6,18 @@
 
 int main()
 {
+	Settings settings;
 	MainWindow window;
+	Field field(5, 5);
+	
 
-	std::pair<int, int> pair;
-
-	while (window.getRenderWindow().isOpen())
+	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.getRenderWindow().pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.getRenderWindow().close();
-		}
+		window.parseEvents();
 
-		window.getRenderWindow().clear();
+		window.startFrame();
 		
-		window.getRenderWindow().display();
+		window.endFrame();
 	}
 
 

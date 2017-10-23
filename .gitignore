@@ -10,3 +10,9 @@
 *.ipdb
 *.iobj
 *.ilk
+.vs/SfmlApp2/v15/.suo
+*.vcxproj
+*.filters
+.vs/SfmlApp2/v15/.suo
+*.db
+*.opendb

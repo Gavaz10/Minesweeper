@@ -11,9 +11,13 @@
 #include <stdio.h>
 #include <tchar.h>
 
+
+#include "constants.h"
 #include "Point2D.h"
 #include "SFML\Graphics.hpp"
+#include "Settings.h"
 #include "MainWindow.h"
+#include "Field.h"
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
