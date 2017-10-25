@@ -7,15 +7,19 @@
 int main()
 {
 	Settings settings;
-	MainWindow window;
-	Field field(5, 5);
-	
+	settings.loadSettings(SETTINGS_FILE);
+
+	MainWindow window(settings.getSettingInt("screen_size_x"), settings.getSettingInt("screen_size_y"));
+
+	Field field(settings);
 
 	while (window.isOpen())
 	{
-		window.parseEvents();
+		window.parseEvents(field, settings);
 
 		window.startFrame();
+
+		window.getRenderWindow().draw(field);
 		
 		window.endFrame();
 	}
