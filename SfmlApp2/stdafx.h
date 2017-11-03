@@ -14,13 +14,14 @@
 #include <map>
 #include <set>
 #include <algorithm>
-
+#include <windows.h>
 
 #include "constants.h"
-#include "Point2D.h"
 #include "SFML\Graphics.hpp"
+#include "textures.h"
 #include "tools.h"
 #include "Settings.h"
+#include "FieldCeil.h"
 #include "Field.h"
 #include "MainWindow.h"
 

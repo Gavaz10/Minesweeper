@@ -6,6 +6,14 @@
 
 int main()
 {
+#if SWEEPER_DEBUG == 0
+	FreeConsole();
+#endif // SWEEPER_DEBUG == 0
+
+
+
+	srand(time(0));
+
 	Settings settings;
 	settings.loadSettings(SETTINGS_FILE);
 
@@ -23,7 +31,6 @@ int main()
 		
 		window.endFrame();
 	}
-
 
     return 0;
 }

@@ -7,13 +7,13 @@ private:
 public:
 	sf::RenderWindow& getRenderWindow();
 	void setResolution(int sizeX, int sizeY);
-	void setResolution(Point2Di size);
+	void setResolution(sf::Vector2i size);
 	bool isOpen();
 
 	void parseEvents(Field& field, Settings& settings);
 	void startFrame();
 	void endFrame();
-	MainWindow(Point2Di size);
+	MainWindow(sf::Vector2i size);
 	MainWindow(int l_screenSizeX, int l_screenSizeY);
 	MainWindow();
 	~MainWindow();

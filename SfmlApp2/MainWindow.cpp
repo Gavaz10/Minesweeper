@@ -18,7 +18,7 @@ void MainWindow::setResolution(int sizeX, int sizeY)
 	m_window.create(sf::VideoMode(sizeX, sizeY), WINDOW_TITLE, sf::Style::Titlebar | sf::Style::Close);
 }
 
-void MainWindow::setResolution(Point2Di size)
+void MainWindow::setResolution(sf::Vector2i size)
 {
 	this->setResolution(size.x, size.y);
 }
@@ -30,30 +30,25 @@ bool MainWindow::isOpen()
 
 void MainWindow::parseEvents(Field& field, Settings& settings)
 {
+	static bool clicked = false;
+	sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
+	field.sendMousePos(mousePos);
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !clicked)
+	{
+		field.clickMouse(mousePos);
+		clicked = true;
+	}
+	else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && clicked)
+	{
+		field.releaseMouse(mousePos);
+		clicked = false;
+	}
+
 	sf::Event event;
 	while (this->m_window.pollEvent(event))
 	{
-		static bool mousePressed = false;
-		static Point2Di prevPos(-1, -1);
 		if (event.type == sf::Event::Closed)
 			onClose(settings);
-		if (event.type == sf::Event::MouseButtonPressed)
-		{
-			field.clickNotRelease(prevPos);
-			mousePressed = true;
-		}
-		if (event.type == sf::Event::MouseMoved)
-		{
-			mousePressed = field.clickBack(prevPos);
-		}
-			
-		if (event.type == sf::Event::MouseButtonReleased && mousePressed)
-		{
-			field.clickMouse(prevPos);
-			mousePressed = false;
-		}
-		
-		prevPos = { sf::Mouse::getPosition(m_window).x, sf::Mouse::getPosition(m_window).y };
 	}
 }
 
@@ -67,7 +62,7 @@ void MainWindow::endFrame()
 	this->m_window.display();
 }
 
-MainWindow::MainWindow(Point2Di l_screenSize)
+MainWindow::MainWindow(sf::Vector2i l_screenSize)
 {
 	setResolution(l_screenSize.x, l_screenSize.y);
 }
