@@ -17,12 +17,14 @@
 #include <windows.h>
 
 #include "constants.h"
+#include "state.h"
 #include "SFML\Graphics.hpp"
 #include "textures.h"
 #include "tools.h"
 #include "Settings.h"
 #include "FieldCeil.h"
 #include "Field.h"
+#include "Menu.h"
 #include "MainWindow.h"
 
 

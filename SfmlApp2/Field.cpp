@@ -20,6 +20,7 @@ void Field::init(Settings& l_settings)
 			m_ceils[i][j].setPosition(j * m_ceilSizeX * 1.f, i * m_ceilSizeY * 1.f);
 			m_ceils[i][j].setState(CLOSED);
 			m_ceils[i][j].setSize(m_ceilSizeX, m_ceilSizeY);
+			m_ceils[i][j].updateSprites();
 		}
 	}
 }
@@ -33,21 +34,25 @@ void Field::openCeil(int x, int y)
 	m_ceils[y][x].openCeil();
 }
 
-int Field::calcNumberOfMinesAround(int x, int y)//TODO
+int Field::calcNumberOfMinesAround(int x, int y)
 {
-	return NULL;
+	int cnt = 0;
+	for (int i = x - 1; i <= x + 1; i++)
+	{
+		for (int j = y - 1; j <= y + 1; j++)
+		{
+			if (i < 0 || j < 0 || i >= m_numberOfCeilsX || j >= m_numberOfCeilsY)
+				continue;
+			if (m_ceils[j][i].isMine())
+				cnt++;
+		}
+	}
+	return cnt;
 }
 
 void Field::startGame(Settings& l_settings)
 {
 	init(l_settings);
-	for (int y = 0; y < m_numberOfCeilsY; y++)
-	{
-		for (int x = 0; x < m_numberOfCeilsY; x++)
-		{
-			
-		}
-	}
 }
 
 void Field::endGame()
@@ -67,8 +72,15 @@ void Field::generateMines(int l_numberOfMines, sf::Vector2i l_firstClick)
 			continue;
 		if (m_ceils[nextMine.y][nextMine.x].isMine())
 			continue;
-		m_ceils[nextMine.y][nextMine.x].setState(MINE);
+		m_ceils[nextMine.y][nextMine.x].setHiddenMine();
 		cnt--;
+	}
+	for (int i = 0; i < m_numberOfCeilsY; i++)
+	{
+		for (int j = 0; j < m_numberOfCeilsX; j++)
+		{
+			m_ceils[i][j].setNumberOfMinesAround(calcNumberOfMinesAround(j, i));
+		}
 	}
 }
 
@@ -125,6 +137,7 @@ void Field::clickMouse(sf::Vector2i pos)
 	sf::Vector2i ceilPos = getCeilPos(pos);
 	if (!checkCeilPosition(ceilPos))
 		return;
+	clickedPos = ceilPos;
 }
 
 void Field::releaseMouse(sf::Vector2i pos)
@@ -132,12 +145,21 @@ void Field::releaseMouse(sf::Vector2i pos)
 	sf::Vector2i ceilPos = getCeilPos(pos);
 	if (!checkCeilPosition(ceilPos))
 		return;
+	if (clickedPos != ceilPos)
+		return;
+	if (firstClick)
+	{
+		generateMines(m_numberOfMines, ceilPos);
+		firstClick = false;
+	}
 	openCeil(ceilPos.x, ceilPos.y);
 }
 
 void Field::sendMousePos(sf::Vector2i pos)
 {
 	sf::Vector2i ceilPos = getCeilPos(pos);
+	if (clickedPos != ceilPos)
+		clickedPos = { -1, -1 };
 	if (lastPontedCeil == ceilPos)
 		return;
 	if (checkCeilPosition(lastPontedCeil))

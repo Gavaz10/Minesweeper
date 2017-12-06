@@ -10,8 +10,6 @@ int main()
 	FreeConsole();
 #endif // SWEEPER_DEBUG == 0
 
-
-
 	srand(time(0));
 
 	Settings settings;
@@ -27,7 +25,20 @@ int main()
 
 		window.startFrame();
 
-		window.getRenderWindow().draw(field);
+		switch (currentState)
+		{
+		default:
+			break;
+		InMenu:
+			break;
+		InSettings:
+			break;
+		InGame:
+			window.getRenderWindow().draw(field);
+			break;
+		}
+
+		
 		
 		window.endFrame();
 	}
