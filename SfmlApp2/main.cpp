@@ -6,6 +6,8 @@
 
 int main()
 {
+	
+
 #if SWEEPER_DEBUG == 0
 	FreeConsole();
 #endif // SWEEPER_DEBUG == 0
@@ -19,27 +21,27 @@ int main()
 
 	Field field(settings);
 
+	game Game;
+
 	while (window.isOpen())
 	{
 		window.parseEvents(field, settings);
 
 		window.startFrame();
 
-		switch (currentState)
+		switch (Game.getState())
 		{
-		default:
+		case InMenu:
 			break;
-		InMenu:
+		case InSettings:
 			break;
-		InSettings:
-			break;
-		InGame:
+		case InGame:
 			window.getRenderWindow().draw(field);
 			break;
+		default:
+			throw new std::exception("wrong state of game");
 		}
 
-		
-		
 		window.endFrame();
 	}
 
