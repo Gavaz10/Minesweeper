@@ -8,6 +8,27 @@ void MainWindow::onClose(Settings& settings)
 	settings.saveSettings(SETTINGS_FILE);
 }
 
+void MainWindow::fixStates(game& state, Field& field, Menu& menu, Settings& settings)
+{
+	if (state.getChangedState() == false)
+	{
+		switch (state.getState())
+		{
+		default:
+			break;
+		case InMenu:
+			menu.setUpWindow(m_window);
+			break;
+		case InGame:
+			field.setUpField(settings);
+			break;
+		case InSettings:
+			break;
+		}
+		state.setChangedState(true);
+	}
+}
+
 sf::RenderWindow& MainWindow::getRenderWindow()
 {
 	return (this->m_window);
@@ -28,20 +49,65 @@ bool MainWindow::isOpen()
 	return this->m_window.isOpen();
 }
 
-void MainWindow::parseEvents(Field& field, Settings& settings)
+void MainWindow::parseEvents(game& state, Field& field, Menu& menu, Settings& settings)
 {
+	fixStates(state, field, menu, settings);
+
 	static bool clicked = false;
 	sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
-	field.sendMousePos(mousePos);
+	switch (state.getState())
+	{
+	default:
+		break;
+	case InGame:
+		field.sendMousePos(mousePos);
+		break;
+	case InMenu:
+		menu.sendMousePos(mousePos);
+		break;
+	}
+	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !clicked)
 	{
-		field.clickMouse(mousePos);
+		switch (state.getState())
+		{
+		default:
+			break;
+		case InGame:
+			field.clickMouse(mousePos);
+			break;
+		case InMenu:
+			menu.sendMousePress(mousePos);
+			break;
+		}
+		
 		clicked = true;
 	}
 	else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && clicked)
 	{
-		field.releaseMouse(mousePos);
+		switch (state.getState())
+		{
+		default:
+			break;
+		case InGame:
+			field.releaseMouse(mousePos);
+			break;
+		case InMenu:
+			menu.sendMouseRelease(mousePos);
+			break;
+		}
 		clicked = false;
+	}
+
+	switch (state.getState())
+	{
+	default:
+		break;
+	case InMenu:
+		if (menu.isGameStarted()) {
+			state.setState(InGame);
+			fixStates(state, field, menu, settings);
+		}
 	}
 
 	sf::Event event;
@@ -50,6 +116,8 @@ void MainWindow::parseEvents(Field& field, Settings& settings)
 		if (event.type == sf::Event::Closed)
 			onClose(settings);
 	}
+
+	
 }
 
 void MainWindow::startFrame()

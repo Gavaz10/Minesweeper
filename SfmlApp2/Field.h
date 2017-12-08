@@ -35,7 +35,8 @@ public:
 	void sendMousePos(sf::Vector2i);
 	void startGame(Settings&);
 	void endGame();
-	Field(Settings&);
+	void setUpField(Settings&);
+	Field();
 	~Field();
 };
 

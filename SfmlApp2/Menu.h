@@ -4,10 +4,17 @@ class Menu : public sf::Drawable
 {
 private:
 	bool gameStarted = false;
+	sf::RectangleShape m_rectangle;
+	int screenSizeY, screenSizeX;
+	MenuButton m_playButton, m_settingsButton, m_quitButton;
 public:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
-	bool isGameStarted() { return gameStarted; }
-	Menu(Settings&, sf::RenderWindow&);
+	void sendMousePos(sf::Vector2i);
+	void sendMousePress(sf::Vector2i);
+	void sendMouseRelease(sf::Vector2i);
+	bool isGameStarted() { return m_playButton.checkClick(); }
+	void setUpWindow(sf::RenderWindow&);
+	Menu();
 	~Menu();
 };
 

@@ -60,6 +60,11 @@ void Field::endGame()
 
 }
 
+void Field::setUpField(Settings& l_settings)
+{
+	startGame(l_settings);
+}
+
 void Field::generateMines(int l_numberOfMines, sf::Vector2i l_firstClick)
 {
 	if (l_numberOfMines >= m_numberOfCeilsX * m_numberOfCeilsY)
@@ -169,9 +174,9 @@ void Field::sendMousePos(sf::Vector2i pos)
 		m_ceils[lastPontedCeil.y][lastPontedCeil.x].pointToCeil();
 }
 
-Field::Field(Settings& l_settings)
+Field::Field()
 {
-	startGame(l_settings);
+	
 }
 
 

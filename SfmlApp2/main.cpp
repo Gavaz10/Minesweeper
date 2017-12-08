@@ -17,21 +17,24 @@ int main()
 	Settings settings;
 	settings.loadSettings(SETTINGS_FILE);
 
-	MainWindow window(settings.getSettingInt("screen_size_x"), settings.getSettingInt("screen_size_y"));
+	MainWindow window;
 
-	Field field(settings);
+	Menu menu;
+
+	Field field;
 
 	game Game;
-
+	 
 	while (window.isOpen())
 	{
-		window.parseEvents(field, settings);
+		window.parseEvents(Game, field, menu, settings);
 
 		window.startFrame();
 
 		switch (Game.getState())
 		{
 		case InMenu:
+			window.getRenderWindow().draw(menu);
 			break;
 		case InSettings:
 			break;

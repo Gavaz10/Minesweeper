@@ -9,7 +9,8 @@ enum GameState : int
 class game
 {
 private:
-	GameState state = InGame;
+	GameState state = InMenu;
+	bool changedState = false;//shows if you changed state of game not just GameState
 public:
 	void openSettings()
 	{
@@ -34,5 +35,19 @@ public:
 	int getState()
 	{
 		return state;
+	}
+	void setState(GameState state)
+	{
+		if (state != this->state)
+			changedState = false;
+		this->state = state;
+	}
+	bool getChangedState()
+	{
+		return changedState;
+	}
+	void setChangedState(bool b)
+	{
+		changedState = b;
 	}
 };
