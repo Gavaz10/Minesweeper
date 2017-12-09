@@ -5,13 +5,14 @@ class Field : public sf::Drawable
 {
 private:
 	bool gameOver = false;
+	bool gameEnd = false;
 	bool gameStarted = false;
 	int m_ceilSizeX = 20, m_ceilSizeY = 20;
 	int m_numberOfCeilsX = 20, m_numberOfCeilsY = 20;
 	int m_numberOfMines = 15;
 	std::vector<std::vector<FieldCeil> > m_ceils;
 	void init(Settings&);
-	sf::Vector2i lastPontedCeil{-1, -1};
+	sf::Vector2i lastPontedCeil{ -1, -1 };
 	sf::Vector2i clickedPos{ -1, -1 };
 	bool firstClick = true;
 	bool checkMousePosition(int, int);
@@ -23,10 +24,12 @@ private:
 	void openCeil(int x, int y);
 	int calcNumberOfMinesAround(int x, int y);
 	void generateMines(int l_numberOfMines, sf::Vector2i l_firstClick);
-	sf::Vector2i pointedCeil{-1, -1};
+	sf::Vector2i pointedCeil{ -1, -1 };
+	void setUpWindow(sf::RenderWindow&);
 public:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 	bool isGameOver() { return gameOver; }
+	bool isGameEnd() { return gameEnd; }
 	bool isGameStarted() { return gameStarted; }
 	void setSize(int x, int y);
 	void setSize(sf::Vector2i);
@@ -35,7 +38,7 @@ public:
 	void sendMousePos(sf::Vector2i);
 	void startGame(Settings&);
 	void endGame();
-	void setUpField(Settings&);
+	void setUpField(Settings&, sf::RenderWindow&);
 	Field();
 	~Field();
 };

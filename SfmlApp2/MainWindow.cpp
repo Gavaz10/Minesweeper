@@ -20,7 +20,7 @@ void MainWindow::fixStates(game& state, Field& field, Menu& menu, Settings& sett
 			menu.setUpWindow(m_window);
 			break;
 		case InGame:
-			field.setUpField(settings);
+			field.setUpField(settings, m_window);
 			break;
 		case InSettings:
 			break;

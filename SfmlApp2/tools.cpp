@@ -16,7 +16,7 @@ bool isNumber(std::string str)
 {
 	for (uint32_t i = 0; i < str.size(); i++)
 	{
-		if (i == 0 && str[i] == '-')
+		if (i == 0 && str[i] == '-' && str.size() != 1)
 			continue;
 		if (str[i] > '9' || str[i] < '0')
 			return false;
@@ -43,4 +43,15 @@ void setSpriteScale(sf::Sprite& sprite, float newSizeX, float newSizeY)
 	float oldRectY = (float)sprite.getTextureRect().height;
 
 	sprite.setScale({newSizeX / oldRectX, newSizeY / oldRectY});
+}
+
+void loadFont(sf::Font& font, const char* name)
+{
+	if (!font.loadFromFile(name))
+		throw new std::exception(((std::string)(name) + " not found").c_str());
+}
+
+void loadFonts()
+{
+	loadFont(arial, "arial.ttf");
 }

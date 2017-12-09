@@ -14,8 +14,12 @@ int main()
 
 	srand(time(0));
 
+	loadFonts();//load all fonts
+
+	//TODO : load all textures here, not in FieldCeil
+
 	Settings settings;
-	settings.loadSettings(SETTINGS_FILE);
+	settings.loadSettings(SETTINGS_FILE);//load all settings
 
 	MainWindow window;
 
@@ -31,7 +35,7 @@ int main()
 
 		window.startFrame();
 
-		switch (Game.getState())
+		switch (Game.getState())//what to draw depending on state
 		{
 		case InMenu:
 			window.getRenderWindow().draw(menu);

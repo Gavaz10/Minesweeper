@@ -25,13 +25,22 @@ void Field::init(Settings& l_settings)
 	}
 }
 
-
+void Field::setUpWindow(sf::RenderWindow& window)
+{
+	window.create(sf::VideoMode(this->m_numberOfCeilsX * this->m_ceilSizeX, this->m_numberOfCeilsY * this->m_ceilSizeY), WINDOW_TITLE, sf::Style::Titlebar | sf::Style::Close);
+}
 
 void Field::openCeil(int x, int y)
 {
+	if (gameOver)//bcz game ended
+		return;
+
 	if (!checkCeilPosition(x, y))
 		return;
 	m_ceils[y][x].openCeil();
+
+	if (m_ceils[y][x].isMine())//end game if mine
+		gameOver = true;
 }
 
 int Field::calcNumberOfMinesAround(int x, int y)
@@ -60,9 +69,10 @@ void Field::endGame()
 
 }
 
-void Field::setUpField(Settings& l_settings)
+void Field::setUpField(Settings& l_settings, sf::RenderWindow& window)
 {
 	startGame(l_settings);
+	setUpWindow(window);
 }
 
 void Field::generateMines(int l_numberOfMines, sf::Vector2i l_firstClick)
@@ -98,6 +108,10 @@ void Field::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		{
 			target.draw(m_ceils[y][x], states);
 		}
+	}
+	if (gameOver)
+	{
+
 	}
 }
 
