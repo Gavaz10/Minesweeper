@@ -104,8 +104,15 @@ void MainWindow::parseEvents(game& state, Field& field, Menu& menu, Settings& se
 	default:
 		break;
 	case InMenu:
-		if (menu.isGameStarted()) {
+		if (menu.isGameStarted()) 
+		{
 			state.setState(InGame);
+			fixStates(state, field, menu, settings);
+		}
+	case InGame:
+		if (field.isGameEnd())
+		{
+			state.setState(InMenu);
 			fixStates(state, field, menu, settings);
 		}
 	}
@@ -115,6 +122,8 @@ void MainWindow::parseEvents(game& state, Field& field, Menu& menu, Settings& se
 	{
 		if (event.type == sf::Event::Closed)
 			onClose(settings);
+		if (event.type == sf::Event::KeyPressed)
+			field.anyButton();
 	}
 
 	

@@ -1,5 +1,5 @@
 field_ceil_size_x 10
 field_ceil_size_y 10
-field_size_x 15
-field_size_y 15
+field_size_x 5
+field_size_y 5
 number_of_mines 15

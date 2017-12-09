@@ -8,10 +8,55 @@ void Field::init(Settings& l_settings)
 	m_ceilSizeY = l_settings.getSettingInt("field_ceil_size_y");
 	m_numberOfMines = l_settings.getSettingInt("number_of_mines");
 
-	m_ceils.resize(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX, FieldCeil()));
+	gameOver = false;
+	gameEnd = false;
+	gameStarted = false;
+
+	firstClick = true;
+
+	m_ceils.resize(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX));
+	for (int i = 0; i < m_ceils.size(); i++)
+	{
+		for (int j = 0; j < m_ceils[i].size(); j++)
+		{
+			m_ceils[i][j] = FieldCeil();
+		}
+	}
+
 
 	m_rectangle.setSize({ m_ceilSizeX * m_numberOfCeilsX * 1.f, m_ceilSizeY * m_numberOfCeilsY * 1.f });
 	m_rectangle.setFillColor(sf::Color::White);
+
+	float sizeX = m_numberOfCeilsX * m_ceilSizeX, sizeY = m_numberOfCeilsY * m_ceilSizeY;
+#ifdef SWEEPER_DEBUG == 1
+	std::cout << sizeX << " " << sizeY << " " << gameOverText.getGlobalBounds().width << " " << gameOverText.getGlobalBounds().height << "\n";
+#endif // SWEEPER_DEBUG == 1
+
+	while (gameOverText.getGlobalBounds().width >= sizeX)
+	{
+		gameOverText.setCharacterSize(gameOverText.getCharacterSize() - 1);
+	}
+
+	while (gameOverText2.getGlobalBounds().width >= sizeX)
+	{
+		gameOverText2.setCharacterSize(gameOverText2.getCharacterSize() - 1);
+	}
+
+	while (gameOverText.getGlobalBounds().height >= sizeY)
+	{
+		gameOverText.setCharacterSize(gameOverText.getCharacterSize() - 1);
+	}
+
+	while (gameOverText2.getGlobalBounds().height >= sizeY)
+	{
+		gameOverText2.setCharacterSize(gameOverText2.getCharacterSize() - 1);
+	}
+
+	gameOverText.setPosition({ sizeX / 2 - gameOverText.getGlobalBounds().width / 2, sizeY / 2 - gameOverText.getGlobalBounds().height  });
+	gameOverText2.setPosition({ sizeX / 2 - gameOverText2.getGlobalBounds().width / 2, sizeY / 2 + gameOverText2.getGlobalBounds().height / 2 });
+
+	gameOverText.setFillColor(sf::Color::Red);
+	gameOverText2.setFillColor(sf::Color::Red);
 
 	for (int i = 0; i < m_numberOfCeilsY; i++)
 	{
@@ -23,6 +68,13 @@ void Field::init(Settings& l_settings)
 			m_ceils[i][j].updateSprites();
 		}
 	}
+}
+
+void Field::anyButton()
+{
+	if (!gameOver)
+		return;
+	gameEnd = true;
 }
 
 void Field::setUpWindow(sf::RenderWindow& window)
@@ -111,7 +163,8 @@ void Field::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	}
 	if (gameOver)
 	{
-
+		target.draw(gameOverText, states);
+		target.draw(gameOverText2, states);
 	}
 }
 

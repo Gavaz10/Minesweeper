@@ -26,6 +26,8 @@ private:
 	void generateMines(int l_numberOfMines, sf::Vector2i l_firstClick);
 	sf::Vector2i pointedCeil{ -1, -1 };
 	void setUpWindow(sf::RenderWindow&);
+	sf::Text gameOverText{"GAME OVER", arial, 50U};
+	sf::Text gameOverText2{ "press any button to go to the menu", arial, 50U };
 public:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 	bool isGameOver() { return gameOver; }
@@ -39,6 +41,7 @@ public:
 	void startGame(Settings&);
 	void endGame();
 	void setUpField(Settings&, sf::RenderWindow&);
+	void anyButton();
 	Field();
 	~Field();
 };
