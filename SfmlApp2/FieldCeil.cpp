@@ -20,13 +20,36 @@ bool FieldCeil::ceilOpened()
 	return m_ceilOpened;
 }
 
+bool FieldCeil::isFlagged()
+{
+	return m_state == FLAG;
+}
+
 void FieldCeil::openCeil()
 {
 	if (ceilOpened())
 		return;
+	if (m_isFlagged)
+		return;
 	m_hiddenMine ? setState(MINE) : setState(OPEN);
 	m_ceilOpened = true;
 	std::cout << "opened" << ' ' << m_x << " " << m_y << '\n';
+}
+
+void FieldCeil::flagCeil()
+{
+	if (ceilOpened())
+		return;
+	setState(m_isFlagged ? CLOSED : FLAG);
+	m_isFlagged = !m_isFlagged;
+}
+
+void FieldCeil::unFlagCeil()
+{
+	if (ceilOpened())
+		return;
+	setState(CLOSED);
+	m_isFlagged = false;
 }
 
 void FieldCeil::pointToCeil()
@@ -36,7 +59,7 @@ void FieldCeil::pointToCeil()
 
 void FieldCeil::unpointToCeil()
 {
-	if (!m_ceilOpened) setState(CLOSED);
+	if (!m_ceilOpened) setState(m_isFlagged ? FLAG : CLOSED);
 }
 
 bool FieldCeil::isMine()
@@ -44,36 +67,22 @@ bool FieldCeil::isMine()
 	return m_hiddenMine;
 }
 
-void FieldCeil::loadTextures()
-{
-	if (texturesLoaded)
-		return;
-
-	loadTextureFromFile(m_closedCeilTexture, "images/blue_boardthumb.png");
-	loadTextureFromFile(m_openCeilTexture, "images/bluesheet.png");
-	loadTextureFromFile(m_mineCeilTexture, "images/minesweeper_gamethumb.png");
-	loadTextureFromFile(m_flagCeilTexture, "images/blue_boardthumb.png");
-	loadTextureFromFile(m_pointedCeilTexture, "images/blue_boardthumb.png");
-
-	texturesLoaded = true;
-}
-
 void FieldCeil::loadSprites()
 {
-	m_closedCeilSprite.setTexture(m_closedCeilTexture);
-	m_openCeilSprite.setTexture(m_openCeilTexture);
-	m_mineCeilSprite.setTexture(m_mineCeilTexture);
-	m_flagCeilSprite.setTexture(m_flagCeilTexture);
-	m_pointedCeilSprite.setTexture(m_pointedCeilTexture);
+	m_closedCeilSprite.setTexture(closedCeilTexture);
+	m_openCeilSprite.setTexture(openCeilTexture);
+	m_mineCeilSprite.setTexture(mineCeilTexture);
+	m_flagCeilSprite.setTexture(flagCeilTexture);
+	m_pointedCeilSprite.setTexture(pointedCeilTexture);
 
-	m_numberOneSprite.setTexture(m_openCeilTexture);
-	m_numberTwoSprite.setTexture(m_openCeilTexture);
-	m_numberThreeSprite.setTexture(m_openCeilTexture);
-	m_numberFourSprite.setTexture(m_openCeilTexture);
-	m_numberFiveSprite.setTexture(m_openCeilTexture);
-	m_numberSixSprite.setTexture(m_openCeilTexture);
-	m_numberSevenSprite.setTexture(m_openCeilTexture);
-	m_numberEightSprite.setTexture(m_openCeilTexture);
+	m_numberOneSprite.setTexture(openCeilTexture);
+	m_numberTwoSprite.setTexture(openCeilTexture);
+	m_numberThreeSprite.setTexture(openCeilTexture);
+	m_numberFourSprite.setTexture(openCeilTexture);
+	m_numberFiveSprite.setTexture(openCeilTexture);
+	m_numberSixSprite.setTexture(openCeilTexture);
+	m_numberSevenSprite.setTexture(openCeilTexture);
+	m_numberEightSprite.setTexture(openCeilTexture);
 
 	m_closedCeilSprite.setTextureRect({ 90, 90, 19, 19 });
 	m_openCeilSprite.setTextureRect({ 600, 20, 19, 19 });
@@ -108,7 +117,6 @@ void FieldCeil::loadSprites()
 
 void FieldCeil::init()
 {
-	loadTextures();
 	loadSprites();
 }
 

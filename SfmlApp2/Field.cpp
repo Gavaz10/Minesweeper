@@ -14,7 +14,7 @@ void Field::init(Settings& l_settings)
 
 	firstClick = true;
 
-	m_ceils.resize(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX));
+	m_ceils.resize(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX, FieldCeil()));
 	for (int i = 0; i < m_ceils.size(); i++)
 	{
 		for (int j = 0; j < m_ceils[i].size(); j++)
@@ -93,6 +93,17 @@ void Field::openCeil(int x, int y)
 
 	if (m_ceils[y][x].isMine())//end game if mine
 		gameOver = true;
+}
+
+void Field::flagCeil(int x, int y)
+{
+	if (gameOver)//bcz game ended
+		return;
+
+	if (!checkCeilPosition(x, y))
+		return;
+
+	m_ceils[y][x].flagCeil();
 }
 
 int Field::calcNumberOfMinesAround(int x, int y)
@@ -225,6 +236,25 @@ void Field::releaseMouse(sf::Vector2i pos)
 		firstClick = false;
 	}
 	openCeil(ceilPos.x, ceilPos.y);
+}
+
+void Field::rightClickMouse(sf::Vector2i pos)
+{
+	sf::Vector2i ceilPos = getCeilPos(pos);
+	if (!checkCeilPosition(ceilPos))
+		return;
+	clickedPos2 = ceilPos;
+}
+
+void Field::rightReleaseMouse(sf::Vector2i pos)
+{
+	sf::Vector2i ceilPos = getCeilPos(pos);
+	if (!checkCeilPosition(ceilPos))
+		return;
+	if (clickedPos2 != ceilPos)
+		return;
+
+	flagCeil(ceilPos.x, ceilPos.y);
 }
 
 void Field::sendMousePos(sf::Vector2i pos)

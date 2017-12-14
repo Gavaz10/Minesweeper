@@ -1,11 +1,9 @@
 #include "stdafx.h"
 
-sf::Texture m_openCeilTexture;
-sf::Texture m_closedCeilTexture;
-sf::Texture m_mineCeilTexture;
-sf::Texture m_flagCeilTexture;
-sf::Texture m_pointedCeilTexture;
-
-bool texturesLoaded = false;
+sf::Texture openCeilTexture;
+sf::Texture closedCeilTexture;
+sf::Texture mineCeilTexture;
+sf::Texture flagCeilTexture;
+sf::Texture pointedCeilTexture;
 
 sf::Font arial;

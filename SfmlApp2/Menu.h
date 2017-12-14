@@ -13,6 +13,8 @@ public:
 	void sendMousePress(sf::Vector2i);
 	void sendMouseRelease(sf::Vector2i);
 	bool isGameStarted() { return m_playButton.checkClick(); }
+	bool isSettingsOpened() { return m_settingsButton.checkClick(); }
+	bool isGameEnd() { return m_quitButton.checkClick(); }
 	void setUpWindow(sf::RenderWindow&);
 	Menu();
 	~Menu();

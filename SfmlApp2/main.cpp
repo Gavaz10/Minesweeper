@@ -16,7 +16,7 @@ int main()
 
 	loadFonts();//load all fonts
 
-	//TODO : load all textures here, not in FieldCeil
+	loadTextures();//load all textures
 
 	Settings settings;
 	settings.loadSettings(SETTINGS_FILE);//load all settings
@@ -41,6 +41,7 @@ int main()
 			window.getRenderWindow().draw(menu);
 			break;
 		case InSettings:
+			window.getRenderWindow().draw(settings);
 			break;
 		case InGame:
 			window.getRenderWindow().draw(field);

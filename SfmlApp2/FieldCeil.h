@@ -21,12 +21,12 @@ private:
 	sf::Sprite m_numberEightSprite;//8
 	sf::Sprite m_numberNineSprite;//9
 
-	void loadTextures();
 	void loadSprites();
 
 	int m_x, m_y;
 	int m_sizeX, m_sizeY;	
 	bool m_ceilOpened = false;
+	bool m_isFlagged = false;
 	int numberOfMinesAround = 0;
 
 	void init();
@@ -39,7 +39,10 @@ public:
 	void updateSprites();
 	void setHiddenMine();
 	bool ceilOpened();
+	bool isFlagged();
 	void openCeil();
+	void flagCeil();
+	void unFlagCeil();
 	void pointToCeil();
 	void unpointToCeil();
 	bool isMine();

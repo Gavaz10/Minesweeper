@@ -1,12 +1,10 @@
 #pragma once
 #include "stdafx.h"
 
-extern sf::Texture m_openCeilTexture;
-extern sf::Texture m_closedCeilTexture;
-extern sf::Texture m_mineCeilTexture;
-extern sf::Texture m_flagCeilTexture;
-extern sf::Texture m_pointedCeilTexture;
-
-extern bool texturesLoaded;
+extern sf::Texture openCeilTexture;
+extern sf::Texture closedCeilTexture;
+extern sf::Texture mineCeilTexture;
+extern sf::Texture flagCeilTexture;
+extern sf::Texture pointedCeilTexture;
 
 extern sf::Font arial;

@@ -31,11 +31,7 @@ int toInt(std::string str)
 	return std::stoi(str);
 }
 
-void loadTextureFromFile(sf::Texture& texture, const char* fileName)
-{
-	if (!texture.loadFromFile(fileName))
-		throw std::exception(("failed to load texture from file: " + (std::string)(fileName)).c_str());
-}
+
 
 void setSpriteScale(sf::Sprite& sprite, float newSizeX, float newSizeY)
 {
@@ -54,4 +50,24 @@ void loadFont(sf::Font& font, const char* name)
 void loadFonts()
 {
 	loadFont(arial, "arial.ttf");
+}
+
+void loadTextureFromFile(sf::Texture& texture, const char* fileName)
+{
+	if (!texture.loadFromFile(fileName))
+		throw std::exception(("failed to load texture from file: " + (std::string)(fileName)).c_str());
+}
+
+void loadTextures()
+{
+	loadTextureFromFile(closedCeilTexture, "images/blue_boardthumb.png");
+	loadTextureFromFile(openCeilTexture, "images/bluesheet.png");
+	loadTextureFromFile(mineCeilTexture, "images/minesweeper_gamethumb.png");
+	loadTextureFromFile(flagCeilTexture, "images/blue_boardthumb.png");
+	loadTextureFromFile(pointedCeilTexture, "images/blue_boardthumb.png");
+}
+
+void endGame()
+{
+	exit(0);
 }
