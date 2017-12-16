@@ -14,7 +14,7 @@ void Field::init(Settings& l_settings)
 
 	firstClick = true;
 
-	m_ceils.resize(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX, FieldCeil()));
+	m_ceils = std::vector<std::vector<FieldCeil>>(m_numberOfCeilsY, std::vector<FieldCeil>(m_numberOfCeilsX, FieldCeil()));
 	for (int i = 0; i < m_ceils.size(); i++)
 	{
 		for (int j = 0; j < m_ceils[i].size(); j++)
@@ -91,7 +91,7 @@ void Field::openCeil(int x, int y)
 		return;
 	m_ceils[y][x].openCeil();
 
-	if (m_ceils[y][x].isMine())//end game if mine
+	if (m_ceils[y][x].isMine() && !m_ceils[y][x].isFlagged())//end game if mine
 		gameOver = true;
 }
 

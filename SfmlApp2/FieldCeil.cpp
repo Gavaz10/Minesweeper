@@ -22,7 +22,7 @@ bool FieldCeil::ceilOpened()
 
 bool FieldCeil::isFlagged()
 {
-	return m_state == FLAG;
+	return m_isFlagged;
 }
 
 void FieldCeil::openCeil()
@@ -54,6 +54,7 @@ void FieldCeil::unFlagCeil()
 
 void FieldCeil::pointToCeil()
 {
+	if (m_isFlagged) return;
 	if (!m_ceilOpened) setState(POINTED);
 }
 
@@ -69,35 +70,35 @@ bool FieldCeil::isMine()
 
 void FieldCeil::loadSprites()
 {
-	m_closedCeilSprite.setTexture(closedCeilTexture);
-	m_openCeilSprite.setTexture(openCeilTexture);
-	m_mineCeilSprite.setTexture(mineCeilTexture);
-	m_flagCeilSprite.setTexture(flagCeilTexture);
-	m_pointedCeilSprite.setTexture(pointedCeilTexture);
+	m_closedCeilSprite.setTexture(gameObjectsTexture);
+	m_openCeilSprite.setTexture(gameObjectsTexture);
+	m_mineCeilSprite.setTexture(gameObjectsTexture);
+	m_flagCeilSprite.setTexture(gameObjectsTexture);
+	m_pointedCeilSprite.setTexture(gameObjectsTexture);
 
-	m_numberOneSprite.setTexture(openCeilTexture);
-	m_numberTwoSprite.setTexture(openCeilTexture);
-	m_numberThreeSprite.setTexture(openCeilTexture);
-	m_numberFourSprite.setTexture(openCeilTexture);
-	m_numberFiveSprite.setTexture(openCeilTexture);
-	m_numberSixSprite.setTexture(openCeilTexture);
-	m_numberSevenSprite.setTexture(openCeilTexture);
-	m_numberEightSprite.setTexture(openCeilTexture);
+	m_numberOneSprite.setTexture(gameObjectsTexture);
+	m_numberTwoSprite.setTexture(gameObjectsTexture);
+	m_numberThreeSprite.setTexture(gameObjectsTexture);
+	m_numberFourSprite.setTexture(gameObjectsTexture);
+	m_numberFiveSprite.setTexture(gameObjectsTexture);
+	m_numberSixSprite.setTexture(gameObjectsTexture);
+	m_numberSevenSprite.setTexture(gameObjectsTexture);
+	m_numberEightSprite.setTexture(gameObjectsTexture);
 
-	m_closedCeilSprite.setTextureRect({ 90, 90, 19, 19 });
-	m_openCeilSprite.setTextureRect({ 600, 20, 19, 19 });
-	m_mineCeilSprite.setTextureRect({ 0, 0, 92, 92 });
-	m_flagCeilSprite.setTextureRect({ 19, 19, 19, 19 });
-	m_pointedCeilSprite.setTextureRect({ 0, 0, 19, 19 });
+	m_closedCeilSprite.setTextureRect({ 320, 0, 32, 32 });
+	m_openCeilSprite.setTextureRect({ 0, 0, 32, 32 });
+	m_mineCeilSprite.setTextureRect({ 288, 0, 32, 32 });
+	m_flagCeilSprite.setTextureRect({ 352, 0, 32, 32 });
+	m_pointedCeilSprite.setTextureRect({ 384, 0, 32, 32 });
 
-	m_numberOneSprite.setTextureRect({ 997, 0, 15, 15 });
-	m_numberTwoSprite.setTextureRect({ 997, 15, 15, 15 });
-	m_numberThreeSprite.setTextureRect({ 997, 30, 15, 15 });
-	m_numberFourSprite.setTextureRect({ 997, 45, 15, 15 });
-	m_numberFiveSprite.setTextureRect({ 997, 60, 15, 15 });
-	m_numberSixSprite.setTextureRect({ 997, 75, 15, 15 });
-	m_numberSevenSprite.setTextureRect({ 997, 90, 15, 15 });
-	m_numberEightSprite.setTextureRect({ 997, 105, 15, 15 });
+	m_numberOneSprite.setTextureRect({ 32, 0, 32, 32 });
+	m_numberTwoSprite.setTextureRect({ 64, 0, 32, 32 });
+	m_numberThreeSprite.setTextureRect({ 96, 0, 32, 32 });
+	m_numberFourSprite.setTextureRect({ 128, 0, 32, 32 });
+	m_numberFiveSprite.setTextureRect({ 160, 0, 32, 32 });
+	m_numberSixSprite.setTextureRect({ 192, 0, 32, 32 });
+	m_numberSevenSprite.setTextureRect({ 224, 0, 32, 32 });
+	m_numberEightSprite.setTextureRect({ 256, 0, 32, 32 });
 
 	setSpriteScale(m_closedCeilSprite, m_sizeX, m_sizeY);
 	setSpriteScale(m_openCeilSprite, m_sizeX, m_sizeY);

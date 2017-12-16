@@ -60,11 +60,7 @@ void loadTextureFromFile(sf::Texture& texture, const char* fileName)
 
 void loadTextures()
 {
-	loadTextureFromFile(closedCeilTexture, "images/blue_boardthumb.png");
-	loadTextureFromFile(openCeilTexture, "images/bluesheet.png");
-	loadTextureFromFile(mineCeilTexture, "images/minesweeper_gamethumb.png");
-	loadTextureFromFile(flagCeilTexture, "images/blue_boardthumb.png");
-	loadTextureFromFile(pointedCeilTexture, "images/blue_boardthumb.png");
+	loadTextureFromFile(gameObjectsTexture, "images/tiles.jpg");
 }
 
 void endGame()

@@ -15,16 +15,20 @@ void Settings::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(ceilSizeXminus, states);
 	target.draw(ceilSizeYplus, states);
 	target.draw(ceilSizeYminus, states);
+	target.draw(numberOfMinesplus, states);
+	target.draw(numberOfMinesminus, states);
 
 	target.draw(fieldSizeX, states);
 	target.draw(fieldSizeY, states);
 	target.draw(ceilY, states);
 	target.draw(ceilX, states);
+	target.draw(numberOfMines, states);
 
 	target.draw(fieldSizeXvalue, states);
 	target.draw(fieldSizeYvalue, states);
 	target.draw(ceilYvalue, states);
 	target.draw(ceilXvalue, states);
+	target.draw(numberOfMinesvalue, states);
 }
 
 void Settings::addDefaultSettingString(std::string l_settingName, std::string defaultValue)
@@ -57,6 +61,10 @@ void Settings::reactToButtons()
 	{
 		setSettingInt("field_ceil_size_y", (getSettingInt("field_ceil_size_y") + 1));
 	}
+	if (numberOfMinesplus.checkClick())
+	{
+		setSettingInt("number_of_mines", (getSettingInt("number_of_mines") + 1));
+	}
 
 	if (fieldSizeXminus.checkClick() && getSettingInt("field_ceil_count_x"))
 	{
@@ -74,11 +82,16 @@ void Settings::reactToButtons()
 	{
 		setSettingInt("field_ceil_size_y", (getSettingInt("field_ceil_size_y") - 1));
 	}
+	if (numberOfMinesminus.checkClick())
+	{
+		setSettingInt("number_of_mines", (getSettingInt("number_of_mines") - 1));
+	}
 
-	fieldSizeXvalue.setString(std::to_string(getSettingInt("field_ceil_count_x")));
-	fieldSizeYvalue.setString(std::to_string(getSettingInt("field_ceil_count_y")));
-	ceilYvalue.     setString(std::to_string(getSettingInt("field_ceil_size_x")));
-	ceilXvalue.     setString(std::to_string(getSettingInt("field_ceil_size_y")));
+	fieldSizeXvalue.   setString(std::to_string(getSettingInt("field_ceil_count_x")));
+	fieldSizeYvalue.   setString(std::to_string(getSettingInt("field_ceil_count_y")));
+	ceilYvalue.        setString(std::to_string(getSettingInt("field_ceil_size_x")));
+	ceilXvalue.        setString(std::to_string(getSettingInt("field_ceil_size_y")));
+	numberOfMinesvalue.setString(std::to_string(getSettingInt("number_of_mines")));
 }
 
 int Settings::getSettingInt(std::string l_settingName)
@@ -151,11 +164,13 @@ void Settings::sendMousePos(sf::Vector2i pos)
 	fieldSizeYplus.sendMousePos(pos);
 	ceilSizeXplus. sendMousePos(pos);
 	ceilSizeYplus. sendMousePos(pos);
+	numberOfMinesplus.sendMousePos(pos);
 
 	fieldSizeXminus.sendMousePos(pos);
 	fieldSizeYminus.sendMousePos(pos);
 	ceilSizeXminus. sendMousePos(pos);
 	ceilSizeYminus. sendMousePos(pos);
+	numberOfMinesminus.sendMousePos(pos);
 }
 
 void Settings::sendMousePress(sf::Vector2i pos)
@@ -166,11 +181,13 @@ void Settings::sendMousePress(sf::Vector2i pos)
 	fieldSizeYplus.sendMousePress(pos);
 	ceilSizeXplus. sendMousePress(pos);
 	ceilSizeYplus. sendMousePress(pos);
+	numberOfMinesplus.sendMousePress(pos);
 
 	fieldSizeXminus.sendMousePress(pos);
 	fieldSizeYminus.sendMousePress(pos);
 	ceilSizeXminus. sendMousePress(pos);
 	ceilSizeYminus. sendMousePress(pos);
+	numberOfMinesminus.sendMousePress(pos);
 }
 
 void Settings::sendMouseRelease(sf::Vector2i pos)
@@ -181,11 +198,13 @@ void Settings::sendMouseRelease(sf::Vector2i pos)
 	fieldSizeYplus.sendMouseRelease(pos);
 	ceilSizeXplus. sendMouseRelease(pos);
 	ceilSizeYplus. sendMouseRelease(pos);
+	numberOfMinesplus.sendMouseRelease(pos);
 
 	fieldSizeXminus.sendMouseRelease(pos);
 	fieldSizeYminus.sendMouseRelease(pos);
 	ceilSizeXminus. sendMouseRelease(pos);
 	ceilSizeYminus. sendMouseRelease(pos);
+	numberOfMinesminus.sendMouseRelease(pos);
 }
 
 Settings::Settings()
@@ -213,21 +232,26 @@ Settings::Settings()
 	fieldSizeY.setFillColor(sf::Color::Black);
 	ceilY.     setFillColor(sf::Color::Black);
 	ceilX.     setFillColor(sf::Color::Black);
+	numberOfMines.setFillColor(sf::Color::Black);
 	fieldSizeXvalue.setFillColor(sf::Color::Black);
 	fieldSizeYvalue.setFillColor(sf::Color::Black);
 	ceilYvalue.     setFillColor(sf::Color::Black);
 	ceilXvalue.     setFillColor(sf::Color::Black);
+	numberOfMinesvalue.setFillColor(sf::Color::Black);
 	
 	//setting origin of all texts to be centered
 	fieldSizeX.setOrigin(fieldSizeX.getGlobalBounds().width / 2, fieldSizeX.getGlobalBounds().height / 2);
 	fieldSizeY.setOrigin(fieldSizeY.getGlobalBounds().width / 2, fieldSizeY.getGlobalBounds().height / 2);
 	ceilY.     setOrigin(ceilY.getGlobalBounds().     width / 2, ceilY.     getGlobalBounds().height / 2);
 	ceilX.     setOrigin(ceilX.getGlobalBounds().     width / 2, ceilX.     getGlobalBounds().height / 2);
-	fieldSizeXvalue.setOrigin(fieldSizeX.getGlobalBounds().width / 2, fieldSizeX.getGlobalBounds().height / 2);
-	fieldSizeYvalue.setOrigin(fieldSizeY.getGlobalBounds().width / 2, fieldSizeY.getGlobalBounds().height / 2);
-	ceilYvalue.     setOrigin(ceilY.getGlobalBounds().     width / 2, ceilY.getGlobalBounds().height / 2);
-	ceilXvalue.     setOrigin(ceilX.getGlobalBounds().     width / 2, ceilX.getGlobalBounds().height / 2);
+	numberOfMines.setOrigin(ceilX.getGlobalBounds().width / 2, ceilX.getGlobalBounds().height / 2);
+	fieldSizeXvalue.setOrigin(0, fieldSizeX.getGlobalBounds().height / 2);
+	fieldSizeYvalue.setOrigin(0, fieldSizeY.getGlobalBounds().height / 2);
+	ceilYvalue.     setOrigin(0, ceilY.getGlobalBounds().height / 2);
+	ceilXvalue.     setOrigin(0, ceilX.getGlobalBounds().height / 2);
+	numberOfMinesvalue.setOrigin(0, numberOfMines.getGlobalBounds().height / 2);
 	
+
 	int widthOfText = fieldSizeY.getGlobalBounds().width / 2;
 	int heightOfText = fieldSizeY.getGlobalBounds().height;
 
@@ -236,22 +260,27 @@ Settings::Settings()
 	fieldSizeY.setPosition(screenSizeX / 2, 160.f);
 	ceilY.     setPosition(screenSizeX / 2, 220.f);
 	ceilX.     setPosition(screenSizeX / 2, 280.f);
+	numberOfMines.setPosition(screenSizeX / 2, 340.f);
 	fieldSizeXvalue.setPosition(screenSizeX / 2 + widthOfText + 40.f + buttonSizeX * 3, 100.f);
 	fieldSizeYvalue.setPosition(screenSizeX / 2 + widthOfText + 40.f + buttonSizeX * 3, 160.f);
 	ceilYvalue.     setPosition(screenSizeX / 2 + widthOfText + 40.f + buttonSizeX * 3, 220.f);
 	ceilXvalue.     setPosition(screenSizeX / 2 + widthOfText + 40.f + buttonSizeX * 3, 280.f);
+	numberOfMinesvalue.setPosition(screenSizeX / 2 + widthOfText + 40.f + buttonSizeX * 3, 340.f);
 
 	//settings pos and size of minus buttons
 	fieldSizeXminus.setRect(screenSizeX / 2 + widthOfText + 10.f + buttonSizeX, 100.f - heightOfText, buttonSizeX, buttonSizeY);
 	fieldSizeYminus.setRect(screenSizeX / 2 + widthOfText + 10.f + buttonSizeX, 160.f - heightOfText, buttonSizeX, buttonSizeY);
 	ceilSizeXminus.setRect (screenSizeX / 2 + widthOfText + 10.f + buttonSizeX, 220.f - heightOfText, buttonSizeX, buttonSizeY);
 	ceilSizeYminus.setRect (screenSizeX / 2 + widthOfText + 10.f + buttonSizeX, 280.f - heightOfText, buttonSizeX, buttonSizeY);
+	numberOfMinesminus.setRect(screenSizeX / 2 + widthOfText + 10.f + buttonSizeX, 340.f - heightOfText, buttonSizeX, buttonSizeY);
 	//...of plus buttons
 	fieldSizeXplus.setRect (screenSizeX / 2 + widthOfText + 30.f + buttonSizeX * 2, 100.f - heightOfText, buttonSizeX, buttonSizeY);
 	fieldSizeYplus.setRect (screenSizeX / 2 + widthOfText + 30.f + buttonSizeX * 2, 160.f - heightOfText, buttonSizeX, buttonSizeY);
 	ceilSizeXplus.  setRect(screenSizeX / 2 + widthOfText + 30.f + buttonSizeX * 2, 220.f - heightOfText, buttonSizeX, buttonSizeY);
 	ceilSizeYplus.  setRect(screenSizeX / 2 + widthOfText + 30.f + buttonSizeX * 2, 280.f - heightOfText, buttonSizeX, buttonSizeY);	
+	numberOfMinesplus.setRect(screenSizeX / 2 + widthOfText + 30.f + buttonSizeX * 2, 340.f - heightOfText, buttonSizeX, buttonSizeY);
 }
+
 
 
 Settings::~Settings()
