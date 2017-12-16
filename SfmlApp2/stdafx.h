@@ -14,6 +14,7 @@
 #include <map>
 #include <set>
 #include <algorithm>
+#include <queue>
 #include <windows.h>
 
 #include "constants.h"

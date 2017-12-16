@@ -82,6 +82,59 @@ void Field::setUpWindow(sf::RenderWindow& window)
 	window.create(sf::VideoMode(this->m_numberOfCeilsX * this->m_ceilSizeX, this->m_numberOfCeilsY * this->m_ceilSizeY), WINDOW_TITLE, sf::Style::Titlebar | sf::Style::Close);
 }
 
+std::vector<sf::Vector2i> Field::getNeighbours(int x, int y)
+{
+	std::vector<sf::Vector2i> answer;
+	for (int xx = x - 1; xx <= x + 1; xx++)
+	{
+		for (int yy = y - 1; yy <= y + 1; yy++)
+		{
+			if (xx < m_numberOfCeilsX && yy < m_numberOfCeilsY && xx >= 0 && yy >= 0)
+			{
+				answer.push_back({ xx, yy });
+			}
+		}
+	}
+	return answer;
+}
+
+void Field::bfs(int x, int y)
+{
+	std::queue<sf::Vector2i> q;
+	q.push({x, y});
+	while (!q.empty())
+	{
+		sf::Vector2i e = q.front();
+		q.pop();
+		for (auto ceil : getNeighbours(e.x, e.y))
+		{
+			if (!m_ceils[ceil.y][ceil.x].isFlagged() && m_ceils[ceil.y][ceil.x].getNumberOfMinesAround() == 0 && !m_ceils[ceil.y][ceil.x].ceilOpened())
+				q.push({ ceil.x, ceil.y });
+			m_ceils[ceil.y][ceil.x].openCeil();
+		}
+	}
+}
+
+void Field::openNeigbours(int num, int x, int y)
+{
+	int flags = 0;
+	for (auto c : getNeighbours(x, y))
+	{
+		if (m_ceils[c.y][c.x].isFlagged())
+			flags++;
+	}
+
+	help = false;//быдлокод
+	if (num == flags)
+	{
+		for (auto c : getNeighbours(x, y))
+		{
+			openCeil(c.x, c.y);
+		}
+	}
+	help = true;//быдлокод
+}
+
 void Field::openCeil(int x, int y)
 {
 	if (gameOver)//bcz game ended
@@ -89,7 +142,14 @@ void Field::openCeil(int x, int y)
 
 	if (!checkCeilPosition(x, y))
 		return;
+	
+	if(help)//быдлокод
+		if (m_ceils[y][x].ceilOpened())
+			openNeigbours(m_ceils[y][x].getNumberOfMinesAround(), x, y);
+
 	m_ceils[y][x].openCeil();
+	if (m_ceils[y][x].getNumberOfMinesAround() == 0)
+		bfs(x, y);
 
 	if (m_ceils[y][x].isMine() && !m_ceils[y][x].isFlagged())//end game if mine
 		gameOver = true;

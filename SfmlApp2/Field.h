@@ -21,8 +21,11 @@ private:
 	bool checkMousePosition(sf::Vector2i);
 	bool checkCeilPosition(int, int);
 	bool checkCeilPosition(sf::Vector2i);
+	std::vector<sf::Vector2i> getNeighbours(int x, int y);
+	void bfs(int x, int y);
 	sf::Vector2i getCeilPos(sf::Vector2i);
 	sf::RectangleShape m_rectangle;
+	void openNeigbours(int num, int x, int y);
 	void openCeil(int x, int y);
 	void flagCeil(int x, int y);
 	int calcNumberOfMinesAround(int x, int y);
@@ -31,6 +34,7 @@ private:
 	sf::Vector2i pointedCeil2{ -1, -1 };
 	void setUpWindow(sf::RenderWindow&);
 	sf::Text gameOverText{"GAME OVER", arial, 50U};
+	bool help = true;//быдлокод
 	sf::Text gameOverText2{ "press any button to go to the menu", arial, 50U };
 public:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;

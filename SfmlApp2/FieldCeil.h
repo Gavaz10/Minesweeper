@@ -35,6 +35,7 @@ private:
 	bool m_hiddenMine = false;
 
 public:
+	int getNumberOfMinesAround() { return numberOfMinesAround; }
 	void setNumberOfMinesAround(int cnt);
 	void updateSprites();
 	void setHiddenMine();
